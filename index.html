@@ -1,0 +1,114 @@
+<!-- 
+    Marcos Antonio Sousa de Aguiar
+    2CAW - Noite
+    Professor: Ricardo Marciano
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atividade 1 - 2CAW</title>
+    <!-- Fonte 'Cormorant Upright' por fonts.google.com -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Framework VueJS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./estilo.css" />
+  </head>
+  <body>
+    <!-- É necessário o JS ativado no navegador -->
+    <noscript>
+      <h1>
+        Ative o Javascript do seu navegador, ou use um navegador compatível
+        (Chrome, Edge, Firefox, etc)!
+      </h1>
+    </noscript>
+    <!-- Div abaixo com id para que toda a lógica do VueJs funcione -->
+    <div id="app">
+      <div class="lado-esquerdo">
+        <!-- Título direto do VueJs -->
+        <h1>{{ titulo }}</h1>
+        <!-- Background -->
+        <div class="fundo"></div>
+      </div>
+      <div class="lado-direito">
+        <!-- 
+            Container inicial, ativo por padrão, se a variavel 'sessaoInicial' for false
+            ele da a vez para um dos outros dois containers abaixo
+        -->
+        <div v-if="sessaoInicial">
+          <button @click="ativaSessaoLogin" class="botao-acao">login</button>
+          <a @click="ativaSessaoCadastro" href="#">
+            Primeiro Acesso?
+            <span>Cadastre-se!</span>
+          </a>
+        </div>
+        <!-- 
+            Container de login/cadastro estão false por padrão,
+            p/ ativar, clica-se no botao de 'Login' ou no link de 'cadastre-se'
+        -->
+        <div v-else-if="sessaoLogin || sessaoCadastro">
+          <!-- Container de login -->
+          <template v-if="sessaoLogin">
+            <form>
+              <input type="email" id="email-login" placeholder="e-mail" />
+              <input type="password" placeholder="senha" />
+              <a href="#"><span>Recuperar Senha</span></a>
+              <button @click="sessaoLogin = true" class="botao-acao mt-30">
+                login
+              </button>
+              <!-- Botao de voltar, p/ retornar ao início(sessaoInicial) -->
+              <a href="#" @click="botaoVoltar"><span>Voltar</span></a>
+            </form>
+          </template>
+          <!-- Container de cadastro -->
+          <template v-if="sessaoCadastro">
+            <form>
+              <input type="email" id="email" placeholder="e-mail" />
+              <input type="password" placeholder="senha" />
+              <input type="password" placeholder="repetir senha" />
+              <button class="botao-acao mt-30">cadastre-se</button>
+              <!-- Botao de voltar, p/ retornar ao início(sessaoInicial) -->
+              <a href="#" @click="botaoVoltar"><span>Voltar</span></a>
+            </form>
+          </template>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- Javascript feito no VueJs ↓ -->
+<script>
+  new Vue({
+    el: "#app",
+    data() {
+      return {
+        titulo: "Construção de aplicações Web",
+        sessaoInicial: true,
+        sessaoLogin: false,
+        sessaoCadastro: false,
+      };
+    },
+    methods: {
+      ativaSessaoLogin() {
+        this.sessaoInicial = false;
+        this.sessaoLogin = true;
+      },
+      ativaSessaoCadastro() {
+        this.sessaoInicial = false;
+        this.sessaoCadastro = true;
+      },
+      botaoVoltar() {
+        this.sessaoInicial = true;
+        this.sessaoLogin = false;
+        this.sessaoCadastro = false;
+      },
+    },
+  });
+</script>
